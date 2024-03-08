@@ -55,7 +55,7 @@ public class Administrador {
         List<Reserva> reservas=new ArrayList<>();
         for(Departamento departamento:departamentos){
             for(Sala sala:departamento.getSalas()){
-               // reservas.addAll(sala.getReservas());
+               reservas.addAll(sala.getReservas());
             }
         }
         return reservas;
