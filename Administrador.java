@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.StringTokenizer;
 
 public class Administrador {
     public static final String contrasena_administrador = "admin";
@@ -108,7 +107,7 @@ public class Administrador {
                     System.out.println("Estas saliendo ya...");
                     break;
                 default:
-                    System.out.println("HA ocurriodo un error");
+                    System.out.println("HA ocurrido un error");
             }
         }while (opcion!=6);
     }
