@@ -1,31 +1,62 @@
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 public class Reserva {
-    private LocalDate fecha;
-    private LocalTime hora;
-    private int duracion; // en horas
-    public Reserva(LocalDate fecha, LocalTime hora, int duracion) {
-        this.fecha = fecha;
-        this.hora = hora;
-        this.duracion = duracion;
+    private String codigo;
+    private String nombre;
+    private String descripcion;
+    private LocalDate fechaInicio;
+    private LocalDate fechaFin;
+
+    public Reserva(String codigo, String nombre, String descripcion, LocalDate fechaInicio, LocalDate fechaFin) {
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
     }
-    public LocalDate getFecha() {
-        return fecha;
+
+    public String getCodigo() {
+        return codigo;
     }
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
-    public LocalTime getHora() {
-        return hora;
+
+    public String getNombre() {
+        return nombre;
     }
-    public void setHora(LocalTime hora) {
-        this.hora = hora;
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
-    public int getDuracion() {
-        return duracion;
+
+    public String getDescripcion() {
+        return descripcion;
     }
-    public void setDuracion(int duracion) {
-        this.duracion = duracion;
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public LocalDate getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(LocalDate fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public LocalDate getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(LocalDate fechaFin) {
+        this.fechaFin = fechaFin;
+    }
+
+    @Override
+    public String toString() {
+        return "Reserva [codigo=" + codigo + ", nombre=" + nombre + ", descripcion=" + descripcion + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + "]";
     }
 }
