@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Administrador {
     public static final String contrasena_administrador = "admin";
@@ -34,7 +35,7 @@ public class Administrador {
         }
         if(DepEleminar!=null){
             departamentos.remove(DepEleminar);
-            System.out.println("Departamento ya esta eleminado"+DepEleminar.getNombre());
+            System.out.println("Departamento ya esta eleminado "+DepEleminar.getNombre());
         }
         else {
             System.out.println("NO existe este departameno con el codigo "+codigo);
@@ -59,11 +60,11 @@ public class Administrador {
         }
         return reservas;
     }
-    public void mostrarMenu(){
-        Scanner scanner=new Scanner(System.in);
+    public void mostrarMenu() {
+        Scanner scanner = new Scanner(System.in);
         String cotrasena;
 
-        do{
+        do {
             System.out.println("Menu de administardor:");
             System.out.println("1.Adgregar departemeno " +
                     "\n2.Eleminar departamento" +
@@ -72,24 +73,28 @@ public class Administrador {
                     "\n5.Listar reservas" +
                     "\n6.Cerrar sesion" +
                     "\nEscribe la contrasena de admin");
-            cotrasena=scanner.nextLine();
-        }while (!comprobarCont(cotrasena));
+            cotrasena = scanner.nextLine();
+        } while (!comprobarCont(cotrasena));
         int opcion;
-        do{
+        do {
             System.out.println("Selecion una opcion");
-            opcion=scanner.nextInt();
+            opcion = scanner.nextInt();
             scanner.nextLine();
 
-            switch (opcion){
+            switch (opcion) {
                 case 1:
                     System.out.println("Escribe el codigo de departamento");
-                    String codigo=scanner.nextLine();
-                    System.out.println("Escribe el nombre de departamento");
-                    String nombre=scanner.nextLine();
-                    addDepar(codigo,nombre);
+                    String codigo = scanner.nextLine();
+                    if (codigo.length() != 3) {
+                        System.out.println("El codigo de departameno tiene que tener solo 3 letras");
+                    } else {
+                        System.out.println("Escribe el nombre de departamento");
+                        String nombre = scanner.nextLine();
+                        addDepar(codigo, nombre);
+                    }
                     break;
                 case 2:
-                    System.out.println("Escribe el codigo de departamento que queres eleminar:");
+                    System.out.println("Escribe el codigo de departamento que queres eleminar: ");
                     String codEleminar=scanner.nextLine();
                     removeDepar(codEleminar);
                     break;
