@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Administrador {
+public class Administrador implements App {
     public static final String contrasena_administrador = "admin";
     public List<Departamento> departamentos;
 
@@ -16,99 +16,86 @@ public class Administrador {
 
     public void addDepar(String codigo, String nombre) {
         for (Departamento departamento : departamentos) {
-            if(departamento.getCodigo().equals(codigo)){
-                System.out.println("El codigo de departamento ya existe");
+            if (departamento.getCodigo().equals(codigo)) {
+                System.out.println("El código de departamento ya existe");
                 return;
             }
         }
-        Departamento departamento=new Departamento(codigo,nombre);
-        departamentos.add(departamento);
+        Departamento departamento = new Departamento(codigo, nombre);
+        departamentos.add(departamento); // Agregar el departamento creado a la lista
     }
-    public void removeDepar(String codigo){
-        Departamento DepEleminar= null;
-        for(Departamento departamento:departamentos){
-            if(departamento.getCodigo().equals(codigo)){
-                DepEleminar=departamento;
+
+    public void removeDepar(String codigo) {
+        Departamento DepEliminar = null;
+        for (Departamento departamento : departamentos) {
+            if (departamento.getCodigo().equals(codigo)) {
+                DepEliminar = departamento;
                 break;
             }
         }
-        if(DepEleminar!=null){
-            departamentos.remove(DepEleminar);
-            System.out.println("Departamento ya esta eleminado "+DepEleminar.getNombre());
-        }
-        else {
-            System.out.println("NO existe este departameno con el codigo "+codigo);
+        if (DepEliminar != null) {
+            departamentos.remove(DepEliminar);
+            System.out.println("Departamento con el nombre " + DepEliminar.getNombre() +
+                    " y con el código " + DepEliminar.getCodigo() + " ya está eliminado");
+        } else {
+            System.out.println("No existe este departamento con el código " + codigo);
         }
     }
-    public ArrayList<Departamento> ListarDep(List<Departamento> departamentos){
+
+    public ArrayList<Departamento> ListarDep() {
         return new ArrayList<>(departamentos);
     }
-    public List<Sala> listaSala(){
+
+    public List<Sala> listaSala() {
         List<Sala> salas = new ArrayList<>();
-        for (Departamento departamento:departamentos){
+        for (Departamento departamento : departamentos) {
             salas.addAll(departamento.getSalas());
         }
         return salas;
     }
-    public List<Reserva> listaReserva(){
-        List<Reserva> reservas=new ArrayList<>();
-        for(Departamento departamento:departamentos){
-            for(Sala sala:departamento.getSalas()){
-               reservas.addAll(sala.getReservas());
+
+    public List<Reserva> listaReserva() {
+        List<Reserva> reservas = new ArrayList<>();
+        for (Departamento departamento : departamentos) {
+            for (Sala sala : departamento.getSalas()) {
+                reservas.addAll(sala.getReservas());
             }
         }
         return reservas;
     }
-    public void mostrarMenu() {
+
+
+    @Override
+    public void loginAdministrador() {
         Scanner scanner = new Scanner(System.in);
-        String cotrasena;
-
-        do {
-            System.out.println("Menu de administardor:");
-            System.out.println("1.Adgregar departemeno " +
-                    "\n2.Eleminar departamento" +
-                    "\n3.Listar departamento" +
-                    "\n4.Listar salas" +
-                    "\n5.Listar reservas" +
-                    "\n6.Cerrar sesion" +
-                    "\nEscribe la contrasena de admin");
-            cotrasena = scanner.nextLine();
-        } while (!comprobarCont(cotrasena));
-        int opcion;
-        do {
-            System.out.println("Selecion una opcion");
-            opcion = scanner.nextInt();
-            scanner.nextLine();
-
-            switch (opcion) {
-                case 1:
-                    System.out.println("Escribe el codigo de departamento");
-                    String codigo = scanner.nextLine();
-                    if (codigo.length() != 3) {
-                        System.out.println("El codigo de departameno tiene que tener solo 3 letras");
-                    } else {
-                        System.out.println("Escribe el nombre de departamento");
-                        String nombre = scanner.nextLine();
-                        addDepar(codigo, nombre);
-                    }
-                    break;
-                case 2:
-                    System.out.println("Escribe el codigo de departamento que queres eleminar: ");
-                    String codEleminar=scanner.nextLine();
-                    removeDepar(codEleminar);
-                    break;
-                case 3:
-                    ListarDep(departamentos);
-                case 4:
-                    listaSala();
-                case 5:
-                    listaReserva();
-                case 6:
-                    System.out.println("Estas saliendo ya...");
-                    break;
-                default:
-                    System.out.println("HA ocurrido un error");
-            }
-        }while (opcion!=6);
+        System.out.print("Ingrese la contraseña de administrador: ");
+        String password = scanner.nextLine();
+        // Lógica de autenticación del administrador (aquí puedes implementar tu propia lógica)
+        if (password.equals(contrasena_administrador)) {
+            System.out.println("Bienvenido, administrador.");
+        } else {
+            System.out.println("Contraseña incorrecta. Volviendo al menú principal.");
+        }
     }
+
+    @Override
+    public void loginDepartamento() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Ingrese el código de departamento: ");
+        String codigo = scanner.nextLine();
+
+        boolean departamentoEncontrado = false;
+        for (Departamento dep : departamentos) {
+            if (dep.getCodigo().equals(codigo)) {
+                departamentoEncontrado = true;
+                System.out.println("Bienvenido, departamento " + dep.getNombre() + ".");
+                break;
+            }
+        }
+
+        if (!departamentoEncontrado) {
+            System.out.println("Código de departamento incorrecto. Volviendo al menú principal.");
+        }
+    }
+
 }
