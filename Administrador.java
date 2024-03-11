@@ -118,13 +118,14 @@ public class Administrador implements App {
 
         do {
             System.out.println("Elige un usuario:"+"\n");
-            System.out.println("1. Entrar como administrador");
-            System.out.println("2. Entrar como departamento");
+            System.out.println("1. Entrar como administrador"+"\n"+
+                                "2. Entrar como departamento"+"\n"+
+                                "3. Salir");
             System.out.print("\n"+"Escribe una opción: ");
 
             if (in.hasNextInt()) {
                 OPCION = in.nextInt();
-                if (OPCION != 1 && OPCION != 2) {
+                if (OPCION != 1 && OPCION != 2 && OPCION!=3) {
                     System.out.println("\n"+"Debes escribir un número correspondiente a una opción válida."+"\n");
                     OPCION = 0;
                 }
@@ -132,13 +133,16 @@ public class Administrador implements App {
                 System.out.println("\n"+"Debes escribir un número correspondiente a una opción válida."+"\n");
                 in.next();
             }
-        } while (OPCION != 1 && OPCION != 2);
+            if (OPCION == 1) {
+                loginAdministrador();
+            } else if(OPCION==2){
+                loginDepartamento();
+            }else if (OPCION==3) {
+                System.out.println("Adios, Hasta pronto");
+                break;
+            }
 
-        if (OPCION == 1) {
-            loginAdministrador();
-        } else {
-            loginDepartamento();
-        }
+        } while (OPCION!=3);
     }
 
     public void mostrarMenuAdministrador() {
@@ -192,7 +196,6 @@ public class Administrador implements App {
                     break;
                 case 6:
                     System.out.println("\n"+"Cerrando sesión del administrador"+"\n");
-                    Menu();
                 default:
                     System.out.println("\n"+"Opción no válida. Inténtelo de nuevo."+"\n");
                     break;
