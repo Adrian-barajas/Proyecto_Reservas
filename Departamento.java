@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Departamento extends Administrador{
+public class Departamento{
     private String codigo;
     private String nombre;
     private List<Reserva> reservas;
