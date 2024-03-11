@@ -49,4 +49,11 @@ public class Sala {
         }
         return null;
     }
+
+    @Override
+    public String toString() {
+        return "Sala, " +
+                "codigo es '" + codigo + '\'' +
+                ", nombre es '" + nombre + '\'' ;
+    }
 }

@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -5,6 +6,7 @@ import java.util.Scanner;
 public class Administrador implements App {
     private static final String CONTRASENA_ADMINISTRADOR = "admin";
     static List<Departamento> departamentos = new ArrayList<>();
+    static List<Sala> salas = new ArrayList<>();
 
     public Administrador() {
         departamentos = new ArrayList<>();
@@ -22,7 +24,7 @@ public class Administrador implements App {
             }
         }
         Departamento departamento = new Departamento(codigo, nombre);
-        departamentos.add(departamento); // Agrega el departamento a la lista estática
+        departamentos.add(departamento);
     }
 
     public void eliminarDepartamento(String codigo) {
@@ -50,14 +52,74 @@ public class Administrador implements App {
     }
 
     public List<Sala> listaSala() {
-        List<Sala> salas = new ArrayList<>();
-        for (Departamento departamento : departamentos) {
-            salas.addAll(departamento.getSalas());
+        System.out.println("Lista de salas:");
+        for (Sala sala : salas) {
+            System.out.println(sala);
         }
         return salas;
     }
 
-    public List<Reserva> listaReserva() {
+    public void agregarSala() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Ingrese el código de la sala: ");
+        String codigoSala = scanner.nextLine().toUpperCase();
+
+        if(codigoSala.length()!=3){
+            System.out.println("El código de sala debe tener exactamente tres caracteres.");
+            return;
+        }
+        for (Sala sala : salas) {
+            if (sala.getCodigo().equals(codigoSala)) {
+                System.out.println("El código de sala ya existe.");
+                return;
+            }
+        }
+
+        System.out.print("Ingrese el nombre de la sala: ");
+        String nombreSala = scanner.nextLine();
+
+
+        Sala nuevaSala = new Sala(codigoSala, nombreSala);
+        salas.add(nuevaSala);
+
+        System.out.println("Sala agregada correctamente.");
+    }
+
+    public void eliminarSala() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Ingrese el código de la sala que desea eliminar: ");
+        String codigoSalaEliminar = scanner.nextLine().toUpperCase();
+
+        Sala salaEliminar = null;
+
+        for (Sala sala : salas) {
+            if (sala.getCodigo().equals(codigoSalaEliminar)) {
+                salaEliminar = sala;
+                break;
+            }
+        }
+
+        if (salaEliminar != null) {
+
+            salas.remove(salaEliminar);
+            System.out.println("Sala eliminada correctamente.");
+
+
+            for (Departamento departamento : departamentos) {
+                for (Reserva reserva : departamento.getReservas()) {
+                    if (reserva.getSalaCodigo().equals(codigoSalaEliminar)) {
+                        departamento.getReservas().remove(reserva);
+                        break;
+                    }
+                }
+            }
+        } else {
+            System.out.println("No se encontró ninguna sala con el código proporcionado.");
+        }
+    }
+   public List<Reserva> listaReserva() {
         List<Reserva> reservas = new ArrayList<>();
         for (Departamento departamento : departamentos) {
             for (Reserva reserva : departamento.getReservas()) {
@@ -65,6 +127,54 @@ public class Administrador implements App {
             }
         }
         return reservas;
+    }
+
+    public void agregarReserva() {
+        Scanner in = new Scanner(System.in);
+
+        System.out.print("Ingrese el código de reserva: ");
+        String codigoReserva = in.nextLine();
+
+        System.out.print("Ingrese el código del departamento: ");
+        String codigoDepartamento = in.nextLine().toUpperCase();
+
+        Departamento departamento = null;
+        for (Departamento depto : departamentos) {
+            if (depto.getCodigo().equals(codigoDepartamento)) {
+                departamento = depto;
+                break;
+            }
+        }
+
+        if (departamento == null) {
+            System.out.println("El departamento especificado no existe.");
+            return;
+        }
+    }
+
+    public void eliminarReserva() {
+        Scanner in = new Scanner(System.in);
+
+        System.out.print("Ingrese el código de sala de la reserva que desea cancelar: ");
+        String codigoSala = in.nextLine().toUpperCase();
+
+
+        System.out.print("Ingrese el código del departamento: ");
+        String codigoDepartamento = in.nextLine().toUpperCase();
+
+
+        Departamento departamento = null;
+        for (Departamento depto : departamentos) {
+            if (depto.getCodigo().equals(codigoDepartamento)) {
+                departamento = depto;
+                break;
+            }
+        }
+
+        if (departamento == null) {
+            System.out.println("El departamento especificado no existe.");
+            return;
+        }
     }
 
     @Override
@@ -152,9 +262,11 @@ public class Administrador implements App {
         System.out.println("1. Agregar departamento " +
                 "\n2. Eliminar departamento" +
                 "\n3. Listar departamentos" +
-                "\n4. Listar salas" +
-                "\n5. Listar reservas" +
-                "\n6. Cerrar sesión");
+                "\n4. Agregar salas" +
+                "\n5. Eleminar salas" +
+                "\n6. Listar salas" +
+                "\n7. Listar reservas" +
+                "\n8. Cerrar sesión");
 
         int opcion = 0;
 
@@ -189,18 +301,24 @@ public class Administrador implements App {
                     listarDepartamentos();
                     break;
                 case 4:
-                    System.out.println(listaSala());
+                    agregarSala();
                     break;
                 case 5:
-                    System.out.println(listaReserva());
+                    eliminarSala();
                     break;
                 case 6:
+                    listaSala();
+                    break;
+                case 7:
+                    System.out.println(listaReserva());
+                    break;
+                case 8:
                     System.out.println("\n"+"Cerrando sesión del administrador"+"\n");
                 default:
                     System.out.println("\n"+"Opción no válida. Inténtelo de nuevo."+"\n");
                     break;
             }
-        } while (opcion != 6);
+        } while (opcion != 8);
     }
     public void mostrarMenuDepartamento() {
         Scanner in = new Scanner(System.in);
@@ -215,21 +333,21 @@ public class Administrador implements App {
             System.out.print("Seleccione una opción: ");
 
             opcion = in.nextInt();
-            in.nextLine(); // Consumir la nueva línea después de leer el número
+            in.nextLine();
 
             switch (opcion) {
                 case 1:
-                    // Lógica para agregar reserva
+                    agregarReserva();
                     break;
                 case 2:
-                    // Lógica para eliminar reserva
+                    eliminarReserva();
                     break;
                 case 3:
                     listaReserva();
                     break;
                 case 4:
                     System.out.println("Cerrando sesión del departamento.");
-                    return; // Salir del método y volver al menú principal
+                    return;
                 default:
                     System.out.println("\n"+"Opción no válida. Inténtelo de nuevo."+"\n");
             }

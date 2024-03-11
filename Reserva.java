@@ -3,11 +3,11 @@ import java.util.List;
 
 public class Reserva {
     private String codigo;
-    private String departamentoCodigo; // Código del departamento que realiza la reserva
-    private String salaCodigo; // Código de la sala reservada
+    private String departamentoCodigo;
+    private String salaCodigo;
     private LocalDate fecha;
     private int horaInicio;
-    private int duracion; // Duración de la reserva en horas
+    private int duracion;
     List<Reserva> reservas;
 
     public Reserva(String codigo, String departamentoCodigo, String salaCodigo, LocalDate fecha, int horaInicio, int duracion) {
@@ -49,22 +49,15 @@ public class Reserva {
         return duracion;
     }
 
-   /* @Override
-    public String toString() {
-        return "Reserva [codigo=" + codigo + ", nombre=" + nombre + "]";
-    }
-
-    */
 
     @Override
     public String toString() {
-        return "Reserva{" +
+        return "Reserva" +
                 "codigo='" + codigo + '\'' +
                 ", departamentoCodigo='" + departamentoCodigo + '\'' +
                 ", salaCodigo='" + salaCodigo + '\'' +
                 ", fecha=" + fecha +
                 ", horaInicio=" + horaInicio +
-                ", duracion=" + duracion +
-                '}';
+                ", duracion=" + duracion;
     }
 }
