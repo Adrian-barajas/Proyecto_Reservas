@@ -17,7 +17,7 @@ public class Administrador implements App {
     public void agregarDepartamento(String codigo, String nombre) {
         for (Departamento departamento : departamentos) {
             if (departamento.getCodigo().equals(codigo)) {
-                System.out.println("El código de departamento ya existe");
+                System.out.println("\n"+"El código de departamento ya existe"+"\n");
                 return;
             }
         }
@@ -36,8 +36,9 @@ public class Administrador implements App {
         if (departamentoEliminar != null) {
             departamentos.remove(departamentoEliminar);
             System.out.println("Departamento eliminado: " + departamentoEliminar.getNombre());
+            System.out.println();
         } else {
-            System.out.println("No se encontró ningún departamento con el código: " + codigo);
+            System.out.println("No se encontró ningún departamento con el código: " + codigo+"\n");
         }
     }
 
@@ -72,10 +73,10 @@ public class Administrador implements App {
         System.out.print("Ingrese la contraseña de administrador: ");
         String password = scanner.nextLine();
         if (!comprobarContrasena(password)) {
-            System.out.println("Contraseña incorrecta. Volviendo al menú principal.");
+            System.out.println("\n"+"Contraseña incorrecta. Volviendo al menú principal."+"\n");
             Menu();
         } else {
-            System.out.println("Bienvenido, administrador.");
+            System.out.println("\n"+"Bienvenido, administrador."+"\n");
             mostrarMenuAdministrador();
 
         }
@@ -90,7 +91,7 @@ public class Administrador implements App {
             System.out.print("Ingrese el código de departamento (debe tener tres letras): ");
             codigo = scanner.nextLine().toUpperCase();
             if (codigo.length() != 3) {
-                System.out.println("El código de departamento debe tener exactamente tres letras.");
+                System.out.println("\n"+"El código de departamento debe tener exactamente tres letras."+"\n");
             }
         } while (codigo.length() != 3);
 
@@ -98,13 +99,13 @@ public class Administrador implements App {
         for (Departamento dep : departamentos) {
             if (dep.getCodigo().equalsIgnoreCase(codigo)) {
                 departamentoEncontrado = true;
-                System.out.println("Bienvenido, departamento " + dep.getNombre() + ".");
+                System.out.println("\n"+"Bienvenido, departamento " + dep.getNombre() + ".");
                 mostrarMenuDepartamento();
             }
         }
 
         if (!departamentoEncontrado) {
-            System.out.println("Código de departamento incorrecto. Volviendo al menú principal.");
+            System.out.println("\n"+"Código de departamento incorrecto. Volviendo al menú principal."+"\n");
             Menu();
         }
     }
@@ -116,19 +117,19 @@ public class Administrador implements App {
         int OPCION = 0;
 
         do {
-            System.out.println("Elige una opción:");
+            System.out.println("Elige un usuario:"+"\n");
             System.out.println("1. Entrar como administrador");
             System.out.println("2. Entrar como departamento");
-            System.out.print("Escribe una opción: ");
+            System.out.print("\n"+"Escribe una opción: ");
 
             if (in.hasNextInt()) {
                 OPCION = in.nextInt();
                 if (OPCION != 1 && OPCION != 2) {
-                    System.out.println("Debes escribir un número correspondiente a una opción válida.");
+                    System.out.println("\n"+"Debes escribir un número correspondiente a una opción válida."+"\n");
                     OPCION = 0;
                 }
             } else {
-                System.out.println("Debes escribir un número correspondiente a una opción válida.");
+                System.out.println("\n"+"Debes escribir un número correspondiente a una opción válida."+"\n");
                 in.next();
             }
         } while (OPCION != 1 && OPCION != 2);
@@ -156,7 +157,7 @@ public class Administrador implements App {
         do {
             System.out.println("Seleccione una opción");
             while (!in.hasNextInt()) {
-                System.out.println("Por favor, ingrese solo un número válido entre 1 y 6.");
+                System.out.println("\n"+"Por favor, ingrese solo un número válido entre 1 y 6."+"\n");
                 in.next();
             }
 
@@ -168,7 +169,7 @@ public class Administrador implements App {
                     System.out.println("Escribe el código de departamento");
                     String codigo = in.nextLine();
                     if (codigo.length() != 3) {
-                        System.out.println("El código de departamento debe tener solo 3 letras");
+                        System.out.println("\n"+"El código de departamento debe tener solo 3 letras"+"\n");
                     } else {
                         System.out.println("Escribe el nombre de departamento");
                         String nombre = in.nextLine();
@@ -190,10 +191,10 @@ public class Administrador implements App {
                     System.out.println(listaReserva());
                     break;
                 case 6:
-                    System.out.println("Cerrando sesión del administrador");
+                    System.out.println("\n"+"Cerrando sesión del administrador"+"\n");
                     Menu();
                 default:
-                    System.out.println("Opción no válida. Inténtelo de nuevo.");
+                    System.out.println("\n"+"Opción no válida. Inténtelo de nuevo."+"\n");
                     break;
             }
         } while (opcion != 6);
@@ -203,7 +204,7 @@ public class Administrador implements App {
 
         int opcion;
         do {
-            System.out.println("Menú de departamento:");
+            System.out.println("\n"+"Menú de departamento:");
             System.out.println("1. Agregar Reserva");
             System.out.println("2. Eliminar Reserva");
             System.out.println("3. Listar Reservas");
@@ -227,7 +228,7 @@ public class Administrador implements App {
                     System.out.println("Cerrando sesión del departamento.");
                     return; // Salir del método y volver al menú principal
                 default:
-                    System.out.println("Opción no válida. Inténtelo de nuevo.");
+                    System.out.println("\n"+"Opción no válida. Inténtelo de nuevo."+"\n");
             }
         } while (opcion != 4);
     }
